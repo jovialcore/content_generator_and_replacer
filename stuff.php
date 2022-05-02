@@ -110,9 +110,8 @@ $dom->loadHTMLFile($file, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
 $xpath = new DOMXPath($dom);
 // $check = [];
 
-
 $replaceMe = [];
-$replacer =  explode(" ", $replace);
+
 
 for ($i = 0; $i < $xpath->query('//text()')->length; $i++) {
   // $node = $dom->getElementsByTagName('*')->item($i); query('//text()')
@@ -122,11 +121,13 @@ for ($i = 0; $i < $xpath->query('//text()')->length; $i++) {
   $input = $node->nodeValue .= " ";
 
   $replaceMe[] =  str_word_count($input, 1);
-  foreach ($replaceMe[$i] as $newreplace) {
+  foreach ($replaceMe[$i] as $newreplace  => &$value) {
     echo '<pre>';
     print_r($newreplace);
     echo '</pre>';
   }
+  // $dom->nodeValue =  preg_replace('/[a-z0-9\.]+/i', $replacer[$i], $explodee);
+
 
 
   // array_push($search,  preg_split('/ +/', $input, null, PREG_SPLIT_NO_EMPTY));
