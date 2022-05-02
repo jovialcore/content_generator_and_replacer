@@ -99,16 +99,17 @@ use PHPHtmlParser\Dom;
 // $content = $dom->saveHTML();
 // echo htmlspecialchars($content);Uncaught Error: Call to a member function getElementsByTagName() on bool in /o
 
-$txt = '<html><body><div class='ff' >hello guys love you html is the new word I want to replace in this new way </div>salah boom<div>bye</div><div>abigail</div>fh jovaial</body> <script>It is well with my soal </script></html>';
+$file = 'index.html';
 
 $replace  = 'nice to meet laughter hate ugly beautiful sad ';
 
 libxml_use_internal_errors(true);
 $dom = new DomDocument();
 $dom->preserveWhiteSpace = false;
-$dom->loadHTML($txt, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
+$dom->loadHTMLFile($file, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
 $xpath = new DOMXPath($dom);
 // $check = [];
+
 
 $replaceMe = [];
 $replacer =  explode(" ", $replace);
