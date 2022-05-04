@@ -99,9 +99,9 @@ use PHPHtmlParser\Dom;
 // $content = $dom->saveHTML();
 // echo htmlspecialchars($content);Uncaught Error: Call to a member function getElementsByTagName() on bool in /o
 
-$file = 'chidiebere samuel prosper victor jerry lazarus isreal emmanuel';
+$file = 'chidieberesamuelprospervictorjerrylazarusisrealemmanuelnn';
 
-$replace = ['single', 'GraceOnah', 'olivia', 'confidence', 'paulina', 'winne', 'jayne', 'chisom'];
+$replace = ['single', 'GraceOnah', 'olivia', 'confidence', 'paulina', 'winne', 'jayne', 'chisom', 'j', 'tooMuch'];
 
 libxml_use_internal_errors(true);
 $dom = new DomDocument();
@@ -116,14 +116,34 @@ $numberofwords = 0;
 for ($i = 0; $i < $xpath->query('//text()')->length; $i++) {
   $node = $xpath->query('//text()')->item($i);
 
-  $input = $node->nodeValue .= " ";
 
-  $replaceMe[] =  str_word_count($input, 1);
+  $input = $node->nodeValue;
 
-  foreach ($replaceMe[$i] as $newreplace) {
-    $numberofwords++;
+
+  $replaceMe[] =  str_word_count($input, 1);;
+  // foreach ($replaceMe[$i] as $newreplace) {
+  //   $numberofwords++;
+  // }
+}
+
+// purge the array from stuff that is not a word
+function purgeArrayWords($array)
+{
+  return array_values(array_filter($array));
+}
+echo '<pre>';
+
+foreach (purgeArrayWords($replaceMe) as $key) {
+  foreach ($key as $singleWord) {
+    $numberofwords = $numberofwords + str_word_count($singleWord);
+
+    $node->nodeValue = str_replace($singleWord . " ", $replace[$numberofwords - 1], $node->nodeValue);
   }
 }
+
+echo '<pre>';
+echo   $node->nodeValue;
+echo '</pre>';
 
 // I will use this code in fututre or later
 // while ($numberofwords > 0) {
@@ -133,17 +153,26 @@ for ($i = 0; $i < $xpath->query('//text()')->length; $i++) {
 //   echo $replaceMe[$random][$random2] = $replace[$numberofwords] . " ";
 // }
 
-// replace node text with new text (replaceMe)
+// // replace node text with new text (replaceMe)
 
-while ($numberofwords > 0) {
-  $numberofwords--;
-  $random = count($replaceMe) - 1; // random number between 0 and the number of words in the array
-  $node->nodeValue = str_replace($replaceMe[$random][$numberofwords], $replace[$numberofwords], $node->nodeValue);
-}
+// while ($numberofwords > 0) {
+//   $numberofwords--;
+//   $words_to_replace = purgeArrayWords($replaceMe);
+//   $keys = count($words_to_replace); // random number between 0 and the number of words in the array
+//   $node->nodeValue = str_replace($words_to_replace[$keys][$numberofwords],  $replace[$numberofwords], $node->nodeValue);
+// }
 
+// echo '<pre>';
+// echo $node->nodeValue;
+// echo '</pre>';
 
-
-
+//rules
+//remove null values
+//notes:
+//all the replacing words must be equal or more than the words you want to replace else you run into issues
+// what I did
+//I had to use array_filters() to remove empty arrays
+//array_filters will preserve the original array keys so I had to use array_values() to reindex the array keys.//coding is fun 
 echo $dom->saveHTML();
 // echo $node->nodeValue = str_replace('nice', "notnice", $node->nodeValue);
 
