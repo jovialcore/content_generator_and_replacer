@@ -138,11 +138,7 @@ for ($i = 0; $i < $xpath->query('//text()')->length; $i++) {
 while ($numberofwords > 0) {
   $numberofwords--;
   $random = count($replaceMe) - 1; // random number between 0 and the number of words in the array
-  $random2 = count($replaceMe[$random])- 1; // this is the last index of the array
-// echo $replaceMe[$random][$numberofwords];
   $node->nodeValue = str_replace($replaceMe[$random][$numberofwords], $replace[$numberofwords], $node->nodeValue);
-
-
 }
 
 
