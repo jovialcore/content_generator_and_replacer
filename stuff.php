@@ -99,19 +99,19 @@ use PHPHtmlParser\Dom;
 // $content = $dom->saveHTML();
 // echo htmlspecialchars($content);Uncaught Error: Call to a member function getElementsByTagName() on bool in /o
 
-$file = 'index.html';
+$file = 'nice to meet laughter hate ugly beautiful sad';
 
 $replace  = 'nice to meet laughter hate ugly beautiful sad ';
 
 libxml_use_internal_errors(true);
 $dom = new DomDocument();
-$dom->preserveWhiteSpace = false;
-$dom->loadHTMLFile($file, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
+$dom->preserveWhiteSpace = true;
+$dom->loadHTML($file, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
 $xpath = new DOMXPath($dom);
 // $check = [];
 
 $replaceMe = [];
-
+$numberofwords = 0;
 
 for ($i = 0; $i < $xpath->query('//text()')->length; $i++) {
   // $node = $dom->getElementsByTagName('*')->item($i); query('//text()')
@@ -120,21 +120,26 @@ for ($i = 0; $i < $xpath->query('//text()')->length; $i++) {
 
   $input = $node->nodeValue .= " ";
 
-  $replaceMe[] =  str_word_count($input, 1);
-  foreach ($replaceMe[$i] as $newreplace  => &$value) {
+  $replaceMe[] =    str_word_count($input, 1);
+
+
+  foreach ($replaceMe[$i] as $newreplace) {
+    $numberofwords++;
     echo '<pre>';
     print_r($newreplace);
     echo '</pre>';
   }
   // $dom->nodeValue =  preg_replace('/[a-z0-9\.]+/i', $replacer[$i], $explodee);
 
-
-
   // array_push($search,  preg_split('/ +/', $input, null, PREG_SPLIT_NO_EMPTY));
-
 
   //$dom->nodeValue =  preg_replace('/([A-Z+a-z])\w+/', $replacer[$i], $explodee);
 }
+
+echo '<pre>';
+print_r($numberofwords);
+echo '</pre>';
+
 // var_export(preg_split('/ +/', $input, null, PREG_SPLIT_NO_EMPTY))
 // echo '********************<pre>';
 // print_r($replaceMe);
