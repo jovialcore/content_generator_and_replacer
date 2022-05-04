@@ -99,46 +99,64 @@ use PHPHtmlParser\Dom;
 // $content = $dom->saveHTML();
 // echo htmlspecialchars($content);Uncaught Error: Call to a member function getElementsByTagName() on bool in /o
 
-$file = 'nice to meet laughter hate ugly beautiful sad';
+$file = 'chidiebere samuel prosper victor jerry lazarus isreal emmanuel';
 
-$replace  = 'nice to meet laughter hate ugly beautiful sad ';
+$replace = ['single', 'GraceOnah', 'olivia', 'confidence', 'paulina', 'winne', 'jayne', 'chisom'];
 
 libxml_use_internal_errors(true);
 $dom = new DomDocument();
 $dom->preserveWhiteSpace = true;
 $dom->loadHTML($file, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
 $xpath = new DOMXPath($dom);
-// $check = [];
 
 $replaceMe = [];
 $numberofwords = 0;
 
-for ($i = 0; $i < $xpath->query('//text()')->length; $i++) {
-  // $node = $dom->getElementsByTagName('*')->item($i); query('//text()')
 
+for ($i = 0; $i < $xpath->query('//text()')->length; $i++) {
   $node = $xpath->query('//text()')->item($i);
 
   $input = $node->nodeValue .= " ";
 
-  $replaceMe[] =    str_word_count($input, 1);
-
+  $replaceMe[] =  str_word_count($input, 1);
 
   foreach ($replaceMe[$i] as $newreplace) {
     $numberofwords++;
-    echo '<pre>';
-    print_r($newreplace);
-    echo '</pre>';
   }
-  // $dom->nodeValue =  preg_replace('/[a-z0-9\.]+/i', $replacer[$i], $explodee);
-
-  // array_push($search,  preg_split('/ +/', $input, null, PREG_SPLIT_NO_EMPTY));
-
-  //$dom->nodeValue =  preg_replace('/([A-Z+a-z])\w+/', $replacer[$i], $explodee);
 }
 
-echo '<pre>';
-print_r($numberofwords);
-echo '</pre>';
+// I will use this code in fututre or later
+// while ($numberofwords > 0) {
+//   $numberofwords--;
+//   $random = rand(0, count($replaceMe) - 1);
+//   $random2 = rand(0, count($replaceMe[$random]) - 1);
+//   echo $replaceMe[$random][$random2] = $replace[$numberofwords] . " ";
+// }
+
+// replace node text with new text (replaceMe)
+
+while ($numberofwords > 0) {
+  $numberofwords--;
+  $random = count($replaceMe) - 1; // random number between 0 and the number of words in the array
+  $random2 = count($replaceMe[$random])- 1; // this is the last index of the array
+// echo $replaceMe[$random][$numberofwords];
+  $node->nodeValue = str_replace($replaceMe[$random][$numberofwords], $replace[$numberofwords], $node->nodeValue);
+
+
+}
+
+
+
+
+echo $dom->saveHTML();
+// echo $node->nodeValue = str_replace('nice', "notnice", $node->nodeValue);
+
+// echo $dom->saveHTML();
+
+
+// echo '<pre>';
+// print_r( $replaceMe[0][0]);
+// echo '</pre>';
 
 // var_export(preg_split('/ +/', $input, null, PREG_SPLIT_NO_EMPTY))
 // echo '********************<pre>';
