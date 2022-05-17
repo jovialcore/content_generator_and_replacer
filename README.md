@@ -1,3 +1,3 @@
 # content_generator_and_replacer
 
-A script for replacing text contents with dummy text / lorem Ipsum 
+A php script for replacing text contents with dummy text / lorem Ipsum 
